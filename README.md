@@ -46,8 +46,7 @@ The software for the force control simulation of UTRC rolling project uses ROS K
     
     12. Run the following command on the Windows computer in cygwin a. socat TCP-LISTEN:60080,fork TCP:127.0.0.1:80
     
-    13. Modify the "abb_irc5_uri" to be the IP of the Windows PC running RobotStudio in file "roslaunch rpi_arm_composites_manufacturing/launch/run.launch",
-    still use port 60080
+    13. Modify the "abb_irc5_uri" to be the IP of the Windows PC running RobotStudio in file "rpi_arm_composites_manufacturing/launch/run.launch", still use port 60080
     
     14. Launch the simulation by running "roslaunch rpi_arm_composites_manufacturing run.launch sim:=true
 
