@@ -1,0 +1,5 @@
+#!/usr/bin/env python
+
+from safe_kinematic_controller.ros import controller as safe_kinematic_controller_ros
+
+safe_kinematic_controller_ros.main()

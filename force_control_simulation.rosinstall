@@ -1,0 +1,55 @@
+
+- git:
+    local-name: rpi_abb_irc5
+    uri: git@github.com:rpiRobotics/rpi_abb_irc5.git
+
+- git:
+    local-name: kinematic_controller_for_force_control
+    uri: git@github.com:ShuyoungChen/kinematic_controller_for_force_control.git
+   
+- git:
+    local-name: rpi_ati_net_ft
+    uri: git@github.com:rpiRobotics/rpi_ati_net_ft.git
+    
+- git:
+    local-name: rpi_arm_composites_manufacturing_testbed
+    uri: git@github.com:ShuyoungChen/rpi_arm_composites_manufacturing_testbed.git
+
+- git:
+    local-name: rpi_general_robotics_toolbox_py
+    uri: git@github.com:rpiRobotics/rpi_general_robotics_toolbox_py.git
+
+- git:
+    local-name: rviz_camera_stream
+    uri: git@github.com:lucasw/rviz_camera_stream.git
+
+- git:
+    local-name: tesseract
+    uri: git@github.com:johnwason/tesseract.git
+    version: tesseract_python
+    
+- git:
+    local-name: trajopt_ros
+    uri: git@github.com:ros-industrial-consortium/trajopt_ros.git
+
+- git:
+    local-name: floating_transform_publisher
+    uri: git@github.com:rpiRobotics/floating_transform_publisher.git
+
+- git:
+    local-name: rpi_arm_composites_manufacturing
+    uri: git@github.com:rpiRobotics/rpi_arm_composites_manufacturing.git
+
+- git:
+    local-name: pyspin_wrapper
+	uri: git@github.com:wlawler45/Pyspin_wrapper.git
+
+- git:
+    local-name: rpi_abb_irb6640_180_255_moveit_config
+    uri: git@github.com:ShuyoungChen/rpi_abb_irb6640_180_255_moveit_config.git
+
+- git:
+    local-name: rpi_abb_irb6640_180_255_support
+	uri: git@github.com:ShuyoungChen/rpi_abb_irb6640_180_255_support.git
+
+

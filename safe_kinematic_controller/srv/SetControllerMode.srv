@@ -1,0 +1,6 @@
+ControllerMode mode
+float64 speed_scalar
+float64[] ft_bias
+float64[] ft_stop_threshold
+---
+ControllerMode error_code

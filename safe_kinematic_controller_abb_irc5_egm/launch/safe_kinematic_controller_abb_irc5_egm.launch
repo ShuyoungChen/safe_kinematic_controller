@@ -1,0 +1,6 @@
+<launch>
+  <arg name="netft_host" default=""/>
+  <node name="safe_kinematic_controller_abb_irc5_egm" pkg="safe_kinematic_controller_abb_irc5_egm" type="safe_kinematic_controller_abb_irc5_egm_ros" required="true" output="screen">
+    <param name="netft_host" value="$(arg netft_host)"/>    
+  </node>
+</launch>

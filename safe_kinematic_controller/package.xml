@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>safe_kinematic_controller</name>
+  <version>0.0.0</version>
+  <description>The safe_kinematic_controller package for industrial robots with external alter capability.</description>
+  
+  <maintainer email="wason@wasontech.com">John Wason</maintainer>
+  
+  <license>BSD</license>
+
+  <!-- Url tags are optional, but multiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+  <!-- Example: -->
+  <!-- <url type="website">http://wiki.ros.org/safe_kinematic_controller</url> -->
+
+  <author email="wason@wasontech.com">John Wason</author>
+
+  <!-- The *depend tags are used to specify dependencies -->
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>actionlib</depend>
+  <depend>control_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <exec_depend>joy</exec_depend>
+  <exec_depend>python-scipy</exec_depend>
+  <depend>rospy</depend>
+  <exec_depend>rpi_general_robotics_toolbox_py</exec_depend>
+  <exec_depend>python-enum34</exec_depend>
+  <depend>std_msgs</depend>
+  <depend>tesseract_monitoring</depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

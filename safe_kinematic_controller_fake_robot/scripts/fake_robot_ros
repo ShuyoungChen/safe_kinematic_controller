@@ -1,0 +1,79 @@
+#!/usr/bin/env python
+
+# Copyright (c) 2017, Rensselaer Polytechnic Institute, Wason Technology LLC
+# All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+# 
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation and/or other materials provided with the distribution.
+#     * Neither the name of the Rensselaer Polytechnic Institute, or Wason 
+#       Technology LLC, nor the names of its contributors may be used to 
+#       endorse or promote products derived from this software without 
+#       specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
+import rospy
+from std_msgs.msg import Float64
+from sensor_msgs.msg import JointState 
+import threading
+
+joint_setpoint = None
+joint_setpoint_lock = threading.Lock()
+
+def joint_command_cb(i, msg):
+    with joint_setpoint_lock:
+        joint_setpoint[i] = msg.data
+
+def main():
+    
+    global joint_setpoint
+    
+    rospy.init_node('fake_robot')
+    
+    joint_names = rospy.get_param('controller_joint_names')
+    if not isinstance(joint_names, list):
+        raise Exception("Invalid joint name list")
+    
+    publish_frequency = rospy.get_param("~publish_frequency")
+    
+    joint_setpoint = [0] * len(joint_names)
+        
+    joint_states_pub = rospy.Publisher("joint_states", JointState, queue_size = 10)
+    
+    joint_command_subs = [None] * len(joint_names)
+    for i in xrange(len(joint_command_subs)):
+        joint_command_subs[i] = rospy.Subscriber(joint_names[i] + "_position_controller/command", Float64, 
+                                                 lambda msg, i=i: joint_command_cb(i,msg))
+    
+    rate = rospy.Rate(publish_frequency)
+    
+    while not rospy.is_shutdown():  
+                
+        if not None in joint_setpoint:
+            
+            joint_states = JointState()
+            joint_states.header.stamp = rospy.Time.now()
+            joint_states.name = joint_names
+            joint_states.position = joint_setpoint
+            joint_states_pub.publish(joint_states)
+            
+        rate.sleep()
+            
+if __name__ == '__main__':
+    main()
