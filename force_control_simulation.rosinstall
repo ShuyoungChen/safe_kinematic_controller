@@ -4,8 +4,8 @@
     uri: git@github.com:rpiRobotics/rpi_abb_irc5.git
 
 - git:
-    local-name: kinematic_controller_for_force_control
-    uri: git@github.com:ShuyoungChen/kinematic_controller_for_force_control.git
+    local-name: safe_kinematic_controller
+    uri: git@github.com:ShuyoungChen/safe_kinematic_controller.git
    
 - git:
     local-name: rpi_ati_net_ft

@@ -21,7 +21,7 @@ The software for the force control simulation of UTRC rolling project uses ROS K
     	e. source devel_isolated/setup.bash (Be sure to use devel_isolated directory, not just devel directory)
     	
     5. Use wstool to add all repos necessary to catkin_ws : http://wiki.ros.org/wstool 
-    	a. wstool init src https://github.com/ShuyoungChen/kinematic_controller_for_force_control/blob/master/force_control_simulation.rosinstall
+    	a. wstool init src https://github.com/ShuyoungChen/safe_kinematic_controller/blob/master/force_control_simulation.rosinstall
     	
     6. Check status and update from wstool 
     	a. cd ~/catkin_ws 
