@@ -47,7 +47,7 @@ class QuadProg(object):
 		self.pt_found = False
 		
 		## whether qdot is solved by qp or by pesudo-inverse
-		self.safe_mode = False
+		self.safe_mode = True
 		
 		## for fixed orientation equality constraint ##
 		self._eq_orien = False
@@ -242,27 +242,27 @@ class QuadProg(object):
 			self._eq_orien = False
 		
 		## if the self-collision has higher priority than collision with environment
-		if self._self_min_dist <= self._min_dist:
-			Closest_Pt = self._self_Closest_Pt_1
-			Closest_Pt_env = self._self_Closest_Pt_2
-		else:
-			Closest_Pt = self._Closest_Pt
-			Closest_Pt_env = self._Closest_Pt_env
+		#if self._self_min_dist <= self._min_dist:
+		#	Closest_Pt = self._self_Closest_Pt_1
+		#	Closest_Pt_env = self._self_Closest_Pt_2
+		#else:
+		#	Closest_Pt = self._Closest_Pt
+		#	Closest_Pt_env = self._Closest_Pt_env
 		
 		#Closest_Pt = self._Closest_Pt
 		#Closest_Pt_env = self._Closest_Pt_env
 	
 		# where is the closest joint to the closest point
-		J2C_Joint = self.Joint2Collision(Closest_Pt, pp)
+		#J2C_Joint = self.Joint2Collision(Closest_Pt, pp)
 			
 		# jacobian of end-effector
 		J_eef = rox.robotjacobian(self._robot, joint_position)
 
-		v_tmp = Closest_Pt - pp[:, [-1]]
+		#v_tmp = Closest_Pt - pp[:, [-1]]
 	
-		v_tmp2 = (pp[:, [-1]] - pp[:, [-3]]) 
-		p_norm2 = norm(v_tmp2)
-		v_tmp2 = v_tmp2/p_norm2
+		#v_tmp2 = (pp[:, [-1]] - pp[:, [-3]]) 
+		#p_norm2 = norm(v_tmp2)
+		#v_tmp2 = v_tmp2/p_norm2
 		
 		# desired rotational velocity
 		vr = spatial_velocity_command[0:3]
@@ -272,7 +272,7 @@ class QuadProg(object):
 		vp = spatial_velocity_command[3:None]
 		vp = vp.reshape(3, 1)
 		
-		J = self.getJacobian3(joint_position, Closest_Pt)    
+		#J = self.getJacobian3(joint_position, Closest_Pt)    
 		##### change 6 #####
 		#J, _ = self.getJacobian2(joint_position, Closest_Pt, 6)
 		
@@ -290,40 +290,44 @@ class QuadProg(object):
 		UB = np.vstack((self._robot.joint_vel_limit.reshape(6, 1), 1, 1))
 	
 		# inequality constrains A and b
-		self._h[0:6] = joint_position.reshape(6, 1) - self._robot.joint_lower_limit.reshape(6, 1)
-		self._h[6:12] = self._robot.joint_upper_limit.reshape(6, 1) - joint_position.reshape(6, 1)
+		#self._h[0:6] = joint_position.reshape(6, 1) - self._robot.joint_lower_limit.reshape(6, 1)
+		#self._h[6:12] = self._robot.joint_upper_limit.reshape(6, 1) - joint_position.reshape(6, 1)
 	
-		dx = Closest_Pt_env[0] - Closest_Pt[0]
-		dy = Closest_Pt_env[1] - Closest_Pt[1]
-		dz = Closest_Pt_env[2] - Closest_Pt[2]
+		#dx = Closest_Pt_env[0] - Closest_Pt[0]
+		#dy = Closest_Pt_env[1] - Closest_Pt[1]
+		#dz = Closest_Pt_env[2] - Closest_Pt[2]
 	
-		dist = np.sqrt(dx**2 + dy**2 + dz**2)
-		dist = norm(Closest_Pt-Closest_Pt_env)
+		#dist = np.sqrt(dx**2 + dy**2 + dz**2)
+		#dist = norm(Closest_Pt-Closest_Pt_env)
 	
 		# derivative of dist w.r.t time
-		der = np.array([dx*(dx**2 + dy**2 + dz**2)**(-0.5), dy*(dx**2 + dy**2 + dz**2)**(-0.5), dz*(dx**2 + dy**2 + dz**2)**(-0.5)])
+		#der = np.array([dx*(dx**2 + dy**2 + dz**2)**(-0.5), dy*(dx**2 + dy**2 + dz**2)**(-0.5), dz*(dx**2 + dy**2 + dz**2)**(-0.5)])
 		
 		#print dist
-		dmin = 0.03#0.115
-		self._h[12] = dist - dmin
+		#dmin = 0.03#0.115
+		#self._h[12] = dist - dmin
 		#self._h[12] = 0.5*(dist*dist - dmin*dmin)
 		
 		## change here ##
 		#self._dhdq[12, 0:6] = np.dot(-der.T, J[3:6,:])
-		self._dhdq[12, 0:6] = np.dot(-dist*der.T, J[3:6,:])
+		#self._dhdq[12, 0:6] = np.dot(-dist*der.T, J[3:6,:])
 		#self._dhdq[12, 0:6] = np.dot(-Closest_Pt_env.T+Closest_Pt.T, J[3:6,:])
 			
-		self._sigma[0:12] = self.inequality_bound(self._h[0:12])
-		self._sigma[12] = self.inequality_bound(self._h[12])  
+		#self._sigma[0:12] = self.inequality_bound(self._h[0:12])
+		#self._sigma[12] = self.inequality_bound(self._h[12])  
 		#print self._h[12]
 		#print self._sigma[12]
 		
 		#A = self._dhdq
 		#b = self._sigma
 	
-		A = np.vstack((self._dhdq, np.eye(8), -np.eye(8)))
-		b = np.vstack((self._sigma, LB, -UB))
-		b = b.reshape((29, ))
+		#A = np.vstack((self._dhdq, np.eye(8), -np.eye(8)))
+		#b = np.vstack((self._sigma, LB, -UB))
+		#b = b.reshape((29, ))
+		
+		A = np.vstack((np.eye(8), -np.eye(8)))
+		b = np.vstack((LB, -UB))
+		b = b.reshape((16, ))
 		
 		# equality constraints for maintaining end-effector orientation (pure translation)
 		#A_eq = np.hstack((J_eef[0:3,:], np.zeros((3, 2))))            
